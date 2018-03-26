@@ -1,0 +1,46 @@
+<div class="text-center">
+  <h1>Profile</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+        
+        <div class="alert alert-info" role="alert">
+          　入力情報をご確認下さい。
+          <p> お名前: <%= @user.name %></p>
+          <p> Email:  <%= @user.email %></p>
+        </div>
+    <%= form_for(@user) do |f| %>
+       <%= render 'layouts/error_messages', model: f.object %>
+
+        <%= f.hidden_field :name %>
+        <%= f.hidden_field :email %>
+        <%= f.hidden_field :password %>
+        
+
+      <div class="form-group">
+        <%= f.label :tennis_age, 'テニス歴' %>
+        <%= f.text_field :tennis_age, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :area, '地域' %>
+        <%= f.text_field :area, class: 'form-control' %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :like_player, '好きなプレーヤー' %>
+        <%= f.text_field :like_player , class: 'form-control' %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :message, '一言メッセージ' %>
+        <%= f.text_field :message, class: 'form-control' %>
+      </div>
+      
+      
+      <%= f.submit 'Sign up', class: 'btn btn-primary btn-block' %>
+      <p>※後からでも追加登録・編集可能です</p>
+    <% end %>
+  </div>
+</div>

@@ -8,6 +8,7 @@
   color: #FFF;
 }
 
-/*.index-body {*/
-/*  background: url("/images/toppage-back.jpg") center;*/
-/*}*/
+.logined_cover {
+  /*opacity:				0.5;*/
+  background-image: url("/images/tennis-court.jpg");
+}

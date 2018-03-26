@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show]
+  before_action :require_user_logged_in, only: [:index, :show, :followings, :followers, :favores]
   
   def index
     @users = User.all.page(params[:page])
@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.order('created_at DESC').page(params[:page])
+    @microposts = @user.microposts.order('created_at DESC').page(params[:page]).per(6)
     counts(@user)
   end
 
@@ -15,6 +15,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def profile
+     @user = User.new(user_params)
+  end
+  
   def create
     @user = User.new(user_params)
 
@@ -24,6 +28,22 @@ class UsersController < ApplicationController
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
       render :new
+    end
+  end
+  
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update(user_params)
+      flash[:success] = '正常に更新されました'
+      redirect_to @user
+    else
+      flash.now[:danger] = '更新されませんでした'
+      render :edit
     end
   end
   
@@ -38,10 +58,16 @@ class UsersController < ApplicationController
     @followers = @user.followers.page(params[:page])
     counts(@user)
   end
+  
+  def favores
+    @user = User.find(params[:id])
+    @favores = @user.favores.page(params[:page])
+    counts(@user)
+  end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :tennis_age, :area, :like_player, :message,)
   end
 end
